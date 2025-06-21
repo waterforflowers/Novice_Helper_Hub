@@ -1,481 +1,739 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novice Learning Hub</title>
     <!-- Tailwind CSS CDN for easy styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Quantico -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quantico&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Quantico&display=swap" rel="stylesheet">
     <style>
-      /* Custom font for a clean look, Inter is default for body */
-      body {
-        font-family: "Inter", sans-serif;
-        background-image: url("https://i.imgur.com/f8hq2cM.png"); /* Your background image */
-        background-size: cover; /* Cover the entire viewport */
-        background-position: center; /* Center the image */
-        background-repeat: no-repeat; /* Do not repeat the image */
-        background-attachment: fixed; /* Keep background fixed while scrolling */
-      }
-      /* Hide the sub-menu and topic content by default */
-      .hidden-element {
-        display: none;
-      }
-      /* Specific font for the main title and sub-menu title */
-      #mainTitle,
-      #subMenu h2,
-      #topicTitle {
-        font-family: "Quantico", sans-serif;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Black shadow with slight blur and opacity */
-      }
-      /* Specific font and color for topic explanations */
-      #topicExplanation {
-        font-family: "Quantico", sans-serif;
-        color: white; /* Make text white */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Subtle black shadow for readability */
-      }
-      /* Ensure links and strong tags within explanations are readable */
-      #topicExplanation a {
-        color: lightblue; /* Example: make links visible */
-        text-decoration: underline;
-      }
-      #topicExplanation strong {
-        color: white; /* Ensure strong text is also white */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-      }
-      #topicExplanation ul,
-      #topicExplanation ol {
-        list-style-position: inside;
-        padding-left: 1rem; /* Adjust as needed for bullet/number visibility */
-      }
-      /* Specific font and color for chatbot title and prompt text */
-      #chatbotTitle,
-      #chatbotPromptText {
-        font-family: "Quantico", sans-serif;
-        color: white; /* Make text white */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Black shadow for readability */
-      }
+        /* Custom font for a clean look, Inter is default for body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://i.imgur.com/4QAmEwR.png'); /* Your background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-attachment: fixed; /* Keep background fixed while scrolling */
+        }
+        /* Hide the sub-menu and topic content by default */
+        .hidden-element {
+            display: none;
+        }
+        /* Specific font for the main title and sub-menu title */
+        #mainTitle, #subMenu h2, #topicTitle {
+            font-family: 'Quantico', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Black shadow with slight blur and opacity */
+        }
+        /* Specific font and color for topic explanations */
+        #topicExplanation {
+            font-family: 'Quantico', sans-serif;
+            color: white; /* Make text white */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Subtle black shadow for readability */
+        }
+        /* Ensure links and strong tags within explanations are readable */
+        #topicExplanation a {
+            color: lightblue; /* Example: make links visible */
+            text-decoration: underline;
+        }
+        #topicExplanation strong {
+            color: white; /* Ensure strong text is also white */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        #topicExplanation ul, #topicExplanation ol {
+            list-style-position: inside;
+            padding-left: 1rem; /* Adjust as needed for bullet/number visibility */
+        }
+        /* Specific font and color for chatbot title and prompt text */
+        #chatbotTitle, #chatbotPromptText {
+            font-family: 'Quantico', sans-serif;
+            color: white; /* Make text white */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Black shadow for readability */
+        }
     </style>
-  </head>
-  <body class="min-h-screen flex items-center justify-center p-4">
-    <div
-      class="bg-black/60 p-8 md:p-12 rounded-2xl shadow-xl max-w-xl w-full text-center transform transition-all duration-300 ease-in-out"
-    >
-      <h1
-        id="mainTitle"
-        class="text-3xl md:text-4xl font-extrabold text-white uppercase mb-6 transition-all duration-300 ease-in-out"
-      >
-        Welcome to the Novice Learning Hub!
-      </h1>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
 
-      <!-- Initial Button to show/hide topics -->
-      <button
-        id="learnButton"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
-      >
-        Let's learn something!
-      </button>
+    <div class="bg-black/60 p-8 md:p-12 rounded-2xl shadow-xl max-w-xl w-full text-center transform transition-all duration-300 ease-in-out">
+        <h1 id="mainTitle" class="text-3xl md:text-4xl font-extrabold text-white uppercase mb-6 transition-all duration-300 ease-in-out">
+            Welcome to the Novice Learning Hub!
+        </h1>
 
-      <!-- Sub-menu Area (initially hidden) -->
-      <div
-        id="subMenu"
-        class="hidden-element mt-8 p-6 bg-black/60 rounded-xl shadow-inner transition-all duration-500 ease-in-out"
-      >
-        <h2 class="text-2xl font-bold text-white uppercase mb-4">
-          Choose a Topic:
-        </h2>
-        <div id="topicButtons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Topic buttons will be dynamically added here -->
-          <button
-            class="topic-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
-            data-topic="ai"
-          >
-            What is AI and how can it help me learn?
-          </button>
-          <button
-            class="topic-btn bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
-            data-topic="github"
-          >
-            What is GitHub and how do I use it?
-          </button>
-          <button
-            class="topic-btn bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
-            data-topic="python_html"
-          >
-            What is Python? What is HTML?
-          </button>
-          <button
-            class="topic-btn bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200"
-            data-topic="ai_persona"
-          >
-            What is an AI Persona and how can it help me learn?
-          </button>
-        </div>
-        <!-- New message bubble -->
-        <div
-          class="bg-blue-200 text-blue-800 p-3 rounded-lg mt-6 text-sm font-semibold"
-        >
-          Check back soon to learn more topics!
-        </div>
-      </div>
-
-      <!-- Topic Content and Chatbot Area (initially hidden) -->
-      <div
-        id="topicContentArea"
-        class="hidden-element mt-8 p-6 bg-black/60 rounded-xl shadow-xl border border-gray-200 text-left transition-all duration-500 ease-in-out"
-      >
-        <button
-          id="backToTopicsBtn"
-          class="bg-gray-200/50 hover:bg-gray-300/50 text-gray-800 font-semibold py-2 px-4 rounded-lg mb-4 transition-all duration-200"
-        >
-          &larr; Back to Topics
+        <!-- Initial Button to show/hide topics -->
+        <button id="learnButton"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+            Let's learn something!
         </button>
-        <h2
-          id="topicTitle"
-          class="text-3xl font-extrabold text-white uppercase mb-4"
-        ></h2>
-        <div
-          id="topicExplanation"
-          class="text-gray-700 leading-relaxed mb-6"
-        ></div>
 
-        <!-- Chatbot Section -->
-        <div class="mt-8 pt-6 border-t-2 border-gray-100">
-          <h3 id="chatbotTitle" class="text-2xl font-bold text-gray-800 mb-4">
-            Ask the AI Explainer!
-          </h3>
-          <p id="chatbotPromptText" class="text-gray-600 mb-4 text-sm">
-            "Pick how or who you want this explained to you, (for example:
-            'explain this like I'm five years old' or 'explain this to me with
-            the persona of Michael Jordan with basketball explanations')."
-          </p>
-          <div
-            id="chatHistory"
-            class="bg-gray-100/20 p-4 rounded-lg h-48 overflow-y-auto mb-4 text-sm"
-          >
-            <!-- Chat messages will appear here -->
-          </div>
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input
-              type="text"
-              id="chatInput"
-              placeholder="Type your question or persona prompt here..."
-              class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button
-              id="sendChatBtn"
-              class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
-              Send
-            </button>
-          </div>
-          <div
-            id="loadingIndicator"
-            class="hidden-element text-center mt-4 text-gray-500"
-          >
-            <div
-              class="spinner border-t-2 border-blue-500 border-solid rounded-full w-6 h-6 animate-spin mx-auto"
-            ></div>
-            Generating explanation...
-          </div>
+        <!-- Sub-menu Area (initially hidden) -->
+        <div id="subMenu" class="hidden-element mt-8 p-6 bg-black/60 rounded-xl shadow-inner transition-all duration-500 ease-in-out">
+            <h2 class="text-2xl font-bold text-white uppercase mb-4" data-key="chooseTopic">Choose a Topic:</h2>
+            <div id="topicButtons" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Topic buttons will be dynamically added here -->
+                <button class="topic-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" data-topic="ai" data-key="aiButton">What is AI and how can it help me learn?</button>
+                <button class="topic-btn bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" data-topic="github" data-key="githubButton">What is GitHub and how do I use it?</button>
+                <button class="topic-btn bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" data-topic="python_html" data-key="pythonHtmlButton">What is Python? What is HTML?</button>
+                <button class="topic-btn bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200" data-topic="ai_persona" data-key="aiPersonaButton">What is an AI Persona and how can it help me learn?</button>
+            </div>
+            <!-- New message bubble -->
+            <div class="bg-blue-200 text-blue-800 p-3 rounded-lg mt-6 text-sm font-semibold" data-key="checkBackMessage">
+                Check back soon to learn more topics!
+            </div>
         </div>
-      </div>
+
+        <!-- Topic Content and Chatbot Area (initially hidden) -->
+        <div id="topicContentArea" class="hidden-element mt-8 p-6 bg-black/60 rounded-xl shadow-xl border border-gray-200 text-left transition-all duration-500 ease-in-out">
+            <button id="backToTopicsBtn" class="bg-gray-200/50 hover:bg-gray-300/50 text-gray-800 font-semibold py-2 px-4 rounded-lg mb-4 transition-all duration-200" data-key="backToTopics">
+                &larr; Back to Topics
+            </button>
+            <h2 id="topicTitle" class="text-3xl font-extrabold text-white uppercase mb-4"></h2>
+            <div id="topicExplanation" class="text-gray-700 leading-relaxed mb-6"></div>
+
+            <!-- Chatbot Section -->
+            <div class="mt-8 pt-6 border-t-2 border-gray-100">
+                <h3 id="chatbotTitle" class="text-2xl font-bold text-gray-800 mb-4" data-key="askAIExplainer">Ask the AI Explainer!</h3>
+                <p id="chatbotPromptText" class="text-gray-600 mb-4 text-sm" data-key="chatbotPrompt">
+                    "Pick how or who you want this explained to you, (for example: 'explain this like I'm five years old' or 'explain this to me with the persona of Michael Jordan with basketball explanations')."
+                </p>
+                <div id="chatHistory" class="bg-gray-100/20 p-4 rounded-lg h-48 overflow-y-auto mb-4 text-sm">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="chatInput" placeholder="Type your question or persona prompt here..."
+                           class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" data-key="chatPlaceholder">
+                    <button id="sendChatBtn"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400" data-key="sendButton">
+                        Send
+                    </button>
+                </div>
+                <div id="loadingIndicator" class="hidden-element text-center mt-4 text-gray-500" data-key="generatingExplanation">
+                    <div class="spinner border-t-2 border-blue-500 border-solid rounded-full w-6 h-6 animate-spin mx-auto"></div>
+                    Generating explanation...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selector fixed at the bottom -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 p-2 bg-black/60 rounded-lg shadow-lg z-10">
+        <label for="languageSelect" class="text-white text-sm mr-2" data-key="selectLanguage">Language:</label>
+        <select id="languageSelect" class="bg-gray-700 text-white rounded-md py-1 px-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="ja">日本語</option>
+            <option value="zh-Hans">简体中文</option>
+        </select>
     </div>
 
     <script>
-      // Get references to elements
-      const learnButton = document.getElementById("learnButton");
-      const subMenu = document.getElementById("subMenu");
-      const mainTitle = document.getElementById("mainTitle");
-      const topicButtonsContainer = document.getElementById("topicButtons");
-      const topicContentArea = document.getElementById("topicContentArea");
-      const topicTitleElement = document.getElementById("topicTitle");
-      const topicExplanationElement =
-        document.getElementById("topicExplanation");
-      const backToTopicsBtn = document.getElementById("backToTopicsBtn");
-      const chatInput = document.getElementById("chatInput");
-      const sendChatBtn = document.getElementById("sendChatBtn");
-      const chatHistoryDiv = document.getElementById("chatHistory");
-      const loadingIndicator = document.getElementById("loadingIndicator");
+        // Get references to elements
+        const learnButton = document.getElementById('learnButton');
+        const subMenu = document.getElementById('subMenu');
+        const mainTitle = document.getElementById('mainTitle');
+        const topicButtonsContainer = document.getElementById('topicButtons');
+        const topicContentArea = document.getElementById('topicContentArea');
+        const topicTitleElement = document.getElementById('topicTitle');
+        const topicExplanationElement = document.getElementById('topicExplanation');
+        const backToTopicsBtn = document.getElementById('backToTopicsBtn');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        const chatHistoryDiv = document.getElementById('chatHistory');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const languageSelect = document.getElementById('languageSelect');
 
-      // Define topic content
-      const topics = {
-        ai: {
-          title: "What is AI and how can it help me learn?",
-          explanation: `
-                    <p class="mb-2"><strong>Artificial Intelligence (AI)</strong> refers to computer systems designed to perform tasks that typically require human intelligence. This includes learning from data, recognizing patterns, understanding natural language, and making decisions. Think of it as teaching a computer to "think" in some ways.</p>
-                    <p class="mb-2"><strong>How AI can help you learn:</strong> AI can personalize your learning experience. It can:</p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><strong>Explain complex topics:</strong> AI models like the one powering this chatbot can break down difficult concepts into simpler terms or different contexts.</li>
-                        <li><strong>Answer questions:</strong> You can ask specific questions about the material, and AI can provide immediate answers.</li>
-                        <li><strong>Generate examples:</strong> Need more examples of a concept? AI can create them on demand.</li>
-                        <li><strong>Simulate scenarios:</strong> Some AI tools allow you to practice skills in virtual environments.</li>
-                        <li><strong>Provide feedback:</strong> AI can analyze your responses and offer suggestions for improvement.</li>
-                    </ul>
-                    <p class="mt-2"><strong>How to prompt AI for learning:</strong> When interacting with AI for learning, be specific! Tell it exactly what you want. Use phrases like:</p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li>"Explain [topic] in simple terms."</li>
-                        <li>"Give me an example of [concept]."</li>
-                        <li>"Summarize [article] for a beginner."</li>
-                        <li>"Explain [topic] to me as if I'm [persona/age]."</li>
-                        <li>"What are the key takeaways from [concept]?"</li>
-                    </ul>
-                `,
-        },
-        github: {
-          title: "What is GitHub and how do I use it?",
-          explanation: `
-                    <p class="mb-2"><strong>GitHub</strong> is a web-based platform that uses Git for version control. It's primarily used by developers to store, manage, and collaborate on code projects. Think of it as a social network for coders, but also a powerful tool for tracking changes and working together.</p>
-                    <p class="mb-2"><strong>Key concepts:</strong></p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><strong>Git:</strong> The actual software that tracks changes in files. GitHub provides a friendly interface for Git.</li>
-                        <li><strong>Repository (Repo):</strong> A project folder on GitHub where all the project's files (code, documents, images) and their revision history are stored.</li>
-                        <li><strong>Clone:</strong> Downloading a copy of a repository from GitHub to your local computer.</li>
-                        <li><strong>Commit:</strong> Saving a snapshot of your changes to your local repository's history. Each commit has a message describing the changes.</li>
-                        <li><strong>Push:</strong> Uploading your local commits to the remote repository on GitHub.</li>
-                        <li><strong>Pull:</strong> Downloading changes from the remote repository on GitHub to your local computer.</li>
-                        <li><strong>Branch:</strong> A separate line of development that allows multiple people to work on different features simultaneously without interfering with the main code until their changes are ready to be merged.</li>
-                        <li><strong>Pull Request (PR):</strong> A way to propose changes from your branch to another (often the main branch). It's a review process where others can comment on your code before it's officially merged.</li>
-                    </ul>
-                    <p class="mt-2"><strong>Basic Usage:</strong></p>
-                    <ol class="list-decimal list-inside ml-4">
-                        <li><strong>Create a Repository:</strong> Start a new project on GitHub.</li>
-                        <li><strong>Clone:</strong> Copy the repo to your computer.</li>
-                        <li><strong>Make Changes:</strong> Edit files, add new ones.</li>
-                        <li><strong>Add & Commit:</strong> Stage your changes and save them with a descriptive message.</li>
-                        <li><strong>Push:</strong> Upload your changes to GitHub.</li>
-                        <li><strong>Collaborate:</strong> Use branches and pull requests to work with others.</li>
-                    </ol>
-                `,
-        },
-        python_html: {
-          title: "What is Python? What is HTML?",
-          explanation: `
-                    <p class="mb-2"><strong>Python:</strong> Python is a high-level, interpreted programming language known for its simplicity and readability. It's often called a "beginner-friendly" language because its syntax is quite intuitive and similar to plain English.</p>
-                    <p class="mb-2"><strong>What Python is used for:</strong></p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><strong>Web Development:</strong> Used for back-end (server-side) logic with frameworks like Django and Flask.</li>
-                        <li><strong>Data Science & AI:</strong> Extremely popular for data analysis, machine learning, and artificial intelligence due to powerful libraries.</li>
-                        <li><strong>Automation:</strong> Scripting repetitive tasks.</li>
-                        <li><strong>Scientific Computing:</strong> Used in academic and research fields.</li>
-                        <li><strong>Desktop Applications:</strong> Building software for computers.</li>
-                    </ul>
-                    <p class="mt-4"><strong>HTML (HyperText Markup Language):</strong> HTML is the standard markup language for creating web pages. It provides the structure and content of a webpage. Think of it as the "bones" and "text" of a website.</p>
-                    <p class="mb-2"><strong>What HTML is used for:</strong></p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><strong>Structuring Content:</strong> Defines headings, paragraphs, lists, images, links, tables, forms, etc.</li>
-                        <li><strong>Creating Webpages:</strong> Every webpage you visit is built using HTML.</li>
-                        <li><strong>Foundation for Web Design:</strong> It works alongside CSS (for styling) and JavaScript (for interactivity) to create dynamic and visually appealing websites.</li>
-                    </ul>
-                    <p class="mt-2">In short, HTML defines *what* content is on a webpage and its basic layout, while Python is a powerful language used for a wide variety of tasks, from building web backends to analyzing complex data.</p>
-                `,
-        },
-        ai_persona: {
-          title: "What is an AI Persona and how can it help me learn?",
-          explanation: `
-                    <p class="mb-2">An <strong>AI Persona</strong> (or AI role-play) is when you instruct an AI to adopt a specific character, style, or knowledge base when generating responses. Instead of just getting factual information, the AI will explain things from the perspective of that persona, using their typical language, metaphors, and focus.</p>
-                    <p class="mb-2"><strong>How AI Personas help you learn:</strong></p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li><strong>Relatability:</strong> Learn from a "voice" that resonates with you (e.g., a sports coach, a chef, a historical figure).</li>
-                        <li><strong>Contextual Understanding:</strong> Explanations are framed within a familiar context, making abstract concepts more concrete.</li>
-                        <li><strong>Engagement:</strong> It makes learning more fun and interactive, keeping you more interested in the material.</li>
-                        <li><strong>Different Perspectives:</strong> You can explore a topic from various angles, gaining deeper insights.</li>
-                        <li><strong>Breaks Down Jargon:</strong> A persona might simplify complex technical terms using analogies from their "field."</li>
-                    </ul>
-                    <p class="mt-2"><strong>How to use AI Personas for learning:</strong> When prompting, explicitly state the persona you want the AI to adopt and the context of the explanation. For example:</p>
-                    <ul class="list-disc list-inside ml-4">
-                        <li>"Explain quantum physics like I'm a chef, using cooking analogies."</li>
-                        <li>"Describe the internet to me as if you are a wise old wizard."</li>
-                        <li>"Teach me about algorithms from the perspective of a football coach, using game strategies."</li>
-                        <li>"Break down blockchain technology like I'm five years old."</li>
-                    </ul>
-                    <p class="mt-2">The more specific you are with the persona and the kind of analogies or language you expect, the better the AI's recontextualization will be.</p>
-                `,
-        },
-      };
+        let currentLanguage = 'en'; // Default language
 
-      let currentTopic = ""; // To keep track of the currently viewed topic for the chatbot
-      let chatHistory = []; // Stores chat messages for the current session
+        // Define topic content for multiple languages
+        const topics = {
+            en: {
+                ai: {
+                    title: "What is AI and how can it help me learn?",
+                    explanation: `
+                        <p class="mb-2"><strong>Artificial Intelligence (AI)</strong> refers to computer systems designed to perform tasks that typically require human intelligence. This includes learning from data, recognizing patterns, understanding natural language, and making decisions. Think of it as teaching a computer to "think" in some ways.</p>
+                        <p class="mb-2"><strong>How AI can help you learn:</strong> AI can personalize your learning experience. It can:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Explain complex topics:</strong> AI models like the one powering this chatbot can break down difficult concepts into simpler terms or different contexts.</li>
+                            <li><strong>Answer questions:</strong> You can ask specific questions about the material, and AI can provide immediate answers.</li>
+                            <li><strong>Generate examples:</strong> Need more examples of a concept? AI can create them on demand.</li>
+                            <li><strong>Simulate scenarios:</strong> Some AI tools allow you to practice skills in virtual environments.</li>
+                            <li><strong>Provide feedback:</b> AI can analyze your responses and offer suggestions for improvement.</li>
+                        </ul>
+                        <p class="mt-2"><strong>How to prompt AI for learning:</strong> When interacting with AI for learning, be specific! Tell it exactly what you want. Use phrases like:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>"Explain [topic] in simple terms."</li>
+                            <li>"Give me an example of [concept]."</li>
+                            <li>"Summarize [article] for a beginner."</li>
+                            <li>"Explain [topic] to me as if I'm [persona/age]."</li>
+                            <li>"What are the key takeaways from [concept]?"</li>
+                        </ul>
+                    `
+                },
+                github: {
+                    title: "What is GitHub and how do I use it?",
+                    explanation: `
+                        <p class="mb-2"><strong>GitHub</strong> is a web-based platform that uses Git for version control. It's primarily used by developers to store, manage, and collaborate on code projects. Think of it as a social network for coders, but also a powerful tool for tracking changes and working together.</p>
+                        <p class="mb-2"><strong>Key concepts:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Git:</strong> The actual software that tracks changes in files. GitHub provides a friendly interface for Git.</li>
+                            <li><strong>Repository (Repo):</strong> A project folder on GitHub where all the project's files (code, documents, images) and their revision history are stored.</li>
+                            <li><strong>Clone:</strong> Downloading a copy of a repository from GitHub to your local computer.</li>
+                            <li><strong>Commit:</strong> Saving a snapshot of your changes to your local repository's history. Each commit has a message describing the changes.</li>
+                            <li><strong>Push:</strong> Uploading your local commits to the remote repository on GitHub.</li>
+                            <li><strong>Pull:</strong> Downloading changes from the remote repository on GitHub to your local computer.</li>
+                            <li><strong>Branch:</strong> A separate line of development that allows multiple people to work on different features simultaneously without interfering with the main code until their changes are ready to be merged.</li>
+                            <li><strong>Pull Request (PR):</strong> A way to propose changes from your branch to another (often the main branch). It's a review process where others can comment on your code before it's officially merged.</li>
+                        </ul>
+                        <p class="mt-2"><strong>Basic Usage:</strong></p>
+                        <ol class="list-decimal list-inside ml-4">
+                            <li><strong>Create a Repository:</strong> Start a new project on GitHub.</li>
+                            <li><strong>Clone:</strong> Copy the repo to your computer.</li>
+                            <li><strong>Make Changes:</strong> Edit files, add new ones.</li>
+                            <li><strong>Add & Commit:</strong> Stage your changes and save them with a descriptive message.</li>
+                            <li><strong>Push:</strong> Upload your changes to GitHub.</li>
+                            <li><strong>Collaborate:</b> Use branches and pull requests to work with others.</li>
+                        </ol>
+                    `
+                },
+                python_html: {
+                    title: "What is Python? What is HTML?",
+                    explanation: `
+                        <p class="mb-2"><strong>Python:</strong> Python is a high-level, interpreted programming language known for its simplicity and readability. It's often called a "beginner-friendly" language because its syntax is quite intuitive and similar to plain English.</p>
+                        <p class="mb-2"><strong>What Python is used for:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Web Development:</strong> Used for back-end (server-side) logic with frameworks like Django and Flask.</li>
+                            <li><strong>Data Science & AI:</strong> Extremely popular for data analysis, machine learning, and artificial intelligence due to powerful libraries.</li>
+                            <li><strong>Automation:</strong> Scripting repetitive tasks.</li>
+                            <li><strong>Scientific Computing:</strong> Used in academic and research fields.</li>
+                            <li><strong>Desktop Applications:</strong> Building software for computers.</li>
+                        </ul>
+                        <p class="mt-4"><strong>HTML (HyperText Markup Language):</strong> HTML is the standard markup language for creating web pages. It provides the structure and content of a webpage. Think of it as the "bones" and "text" of a website.</p>
+                        <p class="mb-2"><strong>What HTML is used for:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Structuring Content:</strong> Defines headings, paragraphs, lists, images, links, tables, forms, etc.</li>
+                            <li><strong>Creating Webpages:</strong> Every webpage you visit is built using HTML.</li>
+                            <li><strong>Foundation for Web Design:</strong> It works alongside CSS (for styling) and JavaScript (for interactivity) to create dynamic and visually appealing websites.</li>
+                        </ul>
+                        <p class="mt-2">In short, HTML defines *what* content is on a webpage and its basic layout, while Python is a powerful language used for a wide variety of tasks, from building web backends to analyzing complex data.</p>
+                    `
+                },
+                ai_persona: {
+                    title: "What is an AI Persona and how can it help me learn?",
+                    explanation: `
+                        <p class="mb-2">An <strong>AI Persona</strong> (or AI role-play) is when you instruct an AI to adopt a specific character, style, or knowledge base when generating responses. Instead of just getting factual information, the AI will explain things from the perspective of that persona, using their typical language, metaphors, and focus.</p>
+                        <p class="mb-2"><strong>How AI Personas help you learn:</strong></p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Relatability:</strong> Learn from a "voice" that resonates with you (e.g., a sports coach, a chef, a historical figure).</li>
+                            <li><strong>Contextual Understanding:</b> Explanations are framed within a familiar context, making abstract concepts more concrete.</li>
+                            <li><strong>Engagement:</strong> It makes learning more fun and interactive, keeping you more interested in the material.</li>
+                            <li><strong>Different Perspectives:</strong> You can explore a topic from various angles, gaining deeper insights.</li>
+                            <li><strong>Breaks Down Jargon:</strong> A persona might simplify complex technical terms using analogies from their "field."</li>
+                        </ul>
+                        <p class="mt-2"><strong>How to use AI Personas for learning:</strong> When prompting, explicitly state the persona you want the AI to adopt and the context of the explanation. For example:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>"Explain quantum physics like I'm a chef, using cooking analogies."</li>
+                            <li>"Describe the internet to me as if you are a wise old wizard."</li>
+                            <li>"Teach me about algorithms from the perspective of a football coach, using game strategies."</li>
+                            <li>"Break down blockchain technology like I'm five years old."</li>
+                        </ul>
+                        <p class="mt-2">The more specific you are with the persona and the kind of analogies or language you expect, the better the AI's recontextualization will be.</p>
+                    `
+                }
+            },
+            es: { // Spanish translations
+                ai: {
+                    title: "¿Qué es la IA y cómo puede ayudarme a aprender?",
+                    explanation: `
+                        <p class="mb-2">La <strong>Inteligencia Artificial (IA)</strong> se refiere a sistemas informáticos diseñados para realizar tareas que normalmente requieren inteligencia humana. Esto incluye aprender de datos, reconocer patrones, comprender el lenguaje natural y tomar decisiones. Piense en ello como enseñar a una computadora a "pensar" de alguna manera.</p>
+                        <p class="mb-2"><strong>Cómo la IA puede ayudarle a aprender:</strong> La IA puede personalizar su experiencia de aprendizaje. Puede:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li><strong>Explicar temas complejos:</strong> Los modelos de IA como el que impulsa este chatbot pueden desglosar conceptos difíciles en términos más simples o en diferentes contextos.</li>
+                            <li><strong>Responder preguntas:</strong> Puede hacer preguntas específicas sobre el material, y la IA puede proporcionar respuestas inmediatas.</li>
+                            <li><strong>Generar ejemplos:</strong> ¿Necesita más ejemplos de un concepto? La IA puede crearlos bajo demanda.</li>
+                            <li><strong>Simular escenarios:</strong> Algunas herramientas de IA le permiten practicar habilidades en entornos virtuales.</li>
+                            <li><strong>Proporcionar retroalimentación:</strong> La IA puede analizar sus respuestas y ofrecer sugerencias para mejorar.</li>
+                        </ul>
+                        <p class="mt-2"><strong>Cómo solicitar explicaciones a la IA para aprender:</strong> Al interactuar con la IA para aprender, ¡sea específico! Dígale exactamente lo que quiere. Use frases como:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>"Explica [tema] en términos sencillos."</li>
+                            <li>"Dame un ejemplo de [concepto]."</li>
+                            <li>"Resume [artículo] para un principiante."</li>
+                            <li>"Explícame [tema] como si fuera [persona/edad]."</li>
+                            <li>"¿Cuáles son las ideas clave de [concepto]?"</li>
+                        </ul>
+                    `
+                },
+                github: {
+                    title: "¿Qué es GitHub y cómo lo uso?",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> es una plataforma web que utiliza Git para el control de versiones. Es utilizado principalmente por desarrolladores para almacenar, gestionar y colaborar en proyectos de código. Piense en ello como una red social para programadores, pero también una herramienta poderosa para rastrear cambios y trabajar en equipo.</p>`
+                },
+                python_html: {
+                    title: "¿Qué es Python? ¿Qué es HTML?",
+                    explanation: `<p class="mb-2"><strong>Python:</strong> Python es un lenguaje de programación de alto nivel e interpretado, conocido por su simplicidad y legibilidad. A menudo se le llama un lenguaje "amigable para principiantes" porque su sintaxis es bastante intuitiva y similar al inglés simple.</p>`
+                },
+                ai_persona: {
+                    title: "¿Qué es una persona de IA y cómo puede ayudarme a aprender?",
+                    explanation: `<p class="mb-2">Una <strong>Persona de IA</strong> (o juego de roles de IA) es cuando le indicas a una IA que adopte un personaje, estilo o base de conocimientos específicos al generar respuestas. En lugar de solo obtener información fáctica, la IA explicará las cosas desde la perspectiva de esa persona, utilizando su lenguaje, metáforas y enfoque típicos.</p>`
+                }
+            },
+            fr: { // French translations (examples)
+                ai: {
+                    title: "Qu'est-ce que l'IA et comment peut-elle m'aider à apprendre ?",
+                    explanation: `<p class="mb-2">L'<strong>Intelligence Artificielle (IA)</strong> fait référence aux systèmes informatiques conçus pour effectuer des tâches qui nécessitent généralement l'intelligence humaine. Cela inclut l'apprentissage à partir de données, la reconnaissance de modèles, la compréhension du langage naturel et la prise de décisions. Considérez-le comme enseigner à un ordinateur à "penser" d'une certaine manière.</p>`
+                },
+                github: {
+                    title: "Qu'est-ce que GitHub et comment l'utiliser ?",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> est une plateforme web qui utilise Git pour le contrôle de version. Il est principalement utilisé par les développeurs pour stocker, gérer et collaborer sur des projets de code.</p>`
+                },
+                python_html: {
+                    title: "Qu'est-ce que Python ? Qu'est-ce que HTML ?",
+                    explanation: `<p class="mb-2"><strong>Python :</strong> Python est un langage de programmation de haut niveau, interprété, connu pour sa simplicité et sa lisibilité.</p>`
+                },
+                ai_persona: {
+                    title: "Qu'est-ce qu'un Persona IA et comment peut-il m'aider à apprendre ?",
+                    explanation: `<p class="mb-2">Un <strong>Persona IA</strong> (ou jeu de rôle IA) consiste à instruire une IA d'adopter un personnage, un style ou une base de connaissances spécifique lors de la génération de réponses.</p>`
+                }
+            },
+            de: { // German translations (examples)
+                ai: {
+                    title: "Was ist KI und wie kann sie mir beim Lernen helfen?",
+                    explanation: `<p class="mb-2"><strong>Künstliche Intelligenz (KI)</strong> bezieht sich auf Computersysteme, die Aufgaben ausführen, die normalerweise menschliche Intelligenz erfordern. Dazu gehören das Lernen aus Daten, das Erkennen von Mustern, das Verstehen natürlicher Sprache und das Treffen von Entscheidungen. Stellen Sie es sich so vor, als würde man einem Computer beibringen, in gewisser Weise zu "denken".</p>`
+                },
+                github: {
+                    title: "Was ist GitHub und wie benutze ich es?",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> ist eine webbasierte Plattform, die Git zur Versionskontrolle verwendet. Es wird hauptsächlich von Entwicklern verwendet, um Codeprojekte zu speichern, zu verwalten und daran zusammenzuarbeiten.</p>`
+                },
+                python_html: {
+                    title: "Was ist Python? Was ist HTML?",
+                    explanation: `<p class="mb-2"><strong>Python:</strong> Python ist eine High-Level, interpretierte Programmiersprache, die für ihre Einfachheit und Lesbarkeit bekannt ist.</p>`
+                },
+                ai_persona: {
+                    title: "Was ist eine KI-Persona und wie kann sie mir beim Lernen helfen?",
+                    explanation: `<p class="mb-2">Eine <strong>KI-Persona</strong> (oder KI-Rollenspiel) ist, wenn Sie eine KI anweisen, einen bestimmten Charakter, Stil oder eine Wissensbasis bei der Generierung von Antworten anzunehmen.</p>`
+                }
+            },
+            it: { // Italian translations (examples)
+                ai: {
+                    title: "Cos'è l'IA e come può aiutarmi a imparare?",
+                    explanation: `<p class="mb-2">L'<strong>Intelligenza Artificiale (IA)</strong> si riferisce a sistemi informatici progettati per eseguire compiti che tipicamente richiedono intelligenza umana. Ciò include l'apprendimento dai dati, il riconoscimento di modelli, la comprensione del linguaggio naturale e la presa di decisioni. Pensateci come insegnare a un computer a "pensare" in qualche modo.</p>`
+                },
+                github: {
+                    title: "Cos'è GitHub e come lo uso?",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> è una piattaforma basata sul web che utilizza Git per il controllo della versione. È principalmente utilizzato dagli sviluppatori per archiviare, gestire e collaborare su progetti di codice.</p>`
+                },
+                python_html: {
+                    title: "Cos'è Python? Cos'è HTML?",
+                    explanation: `<p class="mb-2"><strong>Python:</strong> Python è un linguaggio di programmazione di alto livello, interpretato, noto per la sua semplicità e leggibilità.</p>`
+                },
+                ai_persona: {
+                    title: "Cos'è una Persona AI e come può aiutarmi a imparare?",
+                    explanation: `<p class="mb-2">Una <strong>Persona AI</strong> (o gioco di ruolo AI) è quando si istruisce un'IA ad adottare un carattere, uno stile o una base di conoscenze specifici quando si generano risposte.</p>`
+                }
+            },
+            pt: { // Portuguese translations (examples)
+                ai: {
+                    title: "O que é IA e como ela pode me ajudar a aprender?",
+                    explanation: `
+                        <p class="mb-2"><strong>Inteligência Artificial (IA)</strong> refere-se a sistemas de computador projetados para realizar tarefas que normalmente exigem inteligência humana. Isso inclui aprender com dados, reconhecer padrões, entender linguagem natural e tomar decisões. Pense nisso como ensinar um computador a "pensar" de certas maneiras.</p>`
+                },
+                github: {
+                    title: "O que é GitHub e como eu o uso?",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> é uma plataforma baseada na web que usa Git para controle de versão. É usado principalmente por desenvolvedores para armazenar, gerenciar e colaborar em projetos de código.</p>`
+                },
+                python_html: {
+                    title: "O que é Python? O que é HTML?",
+                    explanation: `<p class="mb-2"><strong>Python:</strong> Python é uma linguagem de programação de alto nível, interpretada, conhecida por sua simplicidade e legibilidad.</p>`
+                },
+                ai_persona: {
+                    title: "O que é uma Persona de IA e como ela pode me ajudar a aprender?",
+                    explanation: `<p class="mb-2">Uma <strong>Persona de IA</strong> (ou encenação de IA) é quando você instrui uma IA a adotar um caráter, estilo ou base de conhecimento específicos ao gerar respostas.</p>`
+                },
+            },
+            ja: { // Japanese translations (examples)
+                ai: {
+                    title: "AIとは何か、そしてどのように学習に役立つのか？",
+                    explanation: `<p class="mb-2"><strong>人工知能 (AI)</strong> とは、通常人間の知能を必要とするタスクを実行するように設計されたコンピューターシステムを指します。これには、データからの学習、パターンの認識、自然言語の理解、意思決定などが含まれます。ある意味でコンピューターに「考える」ことを教えるようなものです。</p>`
+                },
+                github: {
+                    title: "GitHubとは何か、どのように使うのか？",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> は、Git をバージョン管理に使用するウェブベースのプラットフォームです。主に開発者がコードプロジェクトを保存、管理、共同作業するために使用されます。</p>`
+                },
+                python_html: {
+                    title: "Pythonとは？HTMLとは？",
+                    explanation: `<p class="mb-2"><strong>Python:</strong> Python は、そのシンプルさと読みやすさで知られる、高水準のインタプリタ型プログラミング言語です。</p>`
+                },
+                ai_persona: {
+                    title: "AIペルソナとは何か、どのように学習に役立つのか？",
+                    explanation: `<p class="mb-2"><strong>AIペルソナ</strong>（またはAIロールプレイ）とは、AIに特定のキャラクター、スタイル、または知識ベースを採用させて応答を生成するように指示することです。</p>`
+                },
+            },
+            "zh-Hans": { // Simplified Chinese translations (examples)
+                ai: {
+                    title: "什么是AI，它如何帮助我学习？",
+                    explanation: `<p class="mb-2"><strong>人工智能 (AI)</strong> 指的是设计用于执行通常需要人类智能的任务的计算机系统。这包括从数据中学习、识别模式、理解自然语言和做出决策。可以将其视为教计算机以某种方式“思考”。</p>`
+                },
+                github: {
+                    title: "什么是GitHub，我如何使用它？",
+                    explanation: `<p class="mb-2"><strong>GitHub</strong> 是一个基于网络的平台，它使用 Git 进行版本控制。它主要由开发人员用于存储、管理和协作代码项目。</p>`
+                },
+                python_html: {
+                    title: "什么是Python？什么是HTML？",
+                    explanation: `<p class="mb-2"><strong>Python：</strong> Python 是一种高级的解释型编程语言，以其简洁性和可读性而闻名。</p>`
+                },
+                ai_persona: {
+                    title: "什么是AI角色，它如何帮助我学习？",
+                    explanation: `<p class="mb-2"><strong>AI角色</strong>（或AI角色扮演）是指您指示AI在生成响应时采用特定的角色、风格或知识库。</p>`
+                },
+            }
+        };
 
-      // Function to display messages in the chat history
-      function displayMessage(sender, message) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("mb-2", "p-2", "rounded-lg", "break-words");
-        if (sender === "user") {
-          messageDiv.classList.add(
-            "bg-blue-100",
-            "text-blue-800",
-            "self-end",
-            "ml-auto",
-            "text-right"
-          );
-        } else {
-          messageDiv.classList.add(
-            "bg-gray-200",
-            "text-gray-800",
-            "self-start",
-            "mr-auto"
-          );
+        // UI Text for multiple languages
+        const uiText = {
+            en: {
+                mainTitle: "Welcome to the Novice Learning Hub!",
+                learnButtonShow: "Let's learn something!",
+                learnButtonHide: "Hide Topics",
+                mainTitleTopics: "What do you want to learn today?",
+                chooseTopic: "Choose a Topic:",
+                aiButton: "What is AI and how can it help me learn?",
+                githubButton: "What is GitHub and how do I use it?",
+                pythonHtmlButton: "What is Python? What is HTML?",
+                aiPersonaButton: "What is an AI Persona and how can it help me learn?",
+                checkBackMessage: "Check back soon to learn more topics!",
+                backToTopics: "&larr; Back to Topics",
+                askAIExplainer: "Ask the AI Explainer!",
+                chatbotPrompt: "\"Pick how or who you want this explained to you, (for example: 'explain this like I'm five years old' or 'explain this to me with the persona of Michael Jordan with basketball explanations').\"",
+                chatPlaceholder: "Type your question or persona prompt here...",
+                sendButton: "Send",
+                generatingExplanation: "Generating explanation...",
+                selectLanguage: "Language:",
+            },
+            es: { // Spanish translations
+                mainTitle: "¡Bienvenido al Centro de Aprendizaje para Novatos!",
+                learnButtonShow: "¡Aprendamos algo!",
+                learnButtonHide: "Ocultar Temas",
+                mainTitleTopics: "¿Qué quieres aprender hoy?",
+                chooseTopic: "Elige un Tema:",
+                aiButton: "¿Qué es la IA y cómo puede ayudarme a aprender?",
+                githubButton: "¿Qué es GitHub y cómo lo uso?",
+                pythonHtmlButton: "¿Qué es Python? ¿Qué es HTML?",
+                aiPersonaButton: "¿Qué es una persona de IA y cómo puede ayudarme a aprender?",
+                checkBackMessage: "¡Vuelve pronto para aprender más temas!",
+                backToTopics: "&larr; Volver a Temas",
+                askAIExplainer: "¡Pregunta al Explicador de IA!",
+                chatbotPrompt: "\"Elige cómo o quién quieres que te lo explique (por ejemplo: 'explícamelo como si tuviera cinco años' o 'explícamelo con la personalidad de Michael Jordan con explicaciones de baloncesto').\"",
+                chatPlaceholder: "Escribe tu pregunta o prompt de persona aquí...",
+                sendButton: "Enviar",
+                generatingExplanation: "Generando explicación...",
+                selectLanguage: "Idioma:",
+            },
+            fr: { // French translations
+                mainTitle: "Bienvenue au Centre d'apprentissage pour débutants !",
+                learnButtonShow: "Apprenons quelque chose !",
+                learnButtonHide: "Masquer les sujets",
+                mainTitleTopics: "Que voulez-vous apprendre aujourd'hui ?",
+                chooseTopic: "Choisissez un sujet :",
+                aiButton: "Qu'est-ce que l'IA et comment peut-elle m'aider à apprendre ?",
+                githubButton: "Qu'est-ce que GitHub et comment l'utiliser ?",
+                pythonHtmlButton: "Qu'est-ce que Python ? Qu'est-ce que HTML ?",
+                aiPersonaButton: "Qu'est-ce qu'un Persona IA et comment peut-il m'aider à apprendre ?",
+                checkBackMessage: "Revenez bientôt pour plus de sujets !",
+                backToTopics: "&larr; Retour aux sujets",
+                askAIExplainer: "Demandez à l'explorateur IA !",
+                chatbotPrompt: "\"Choisissez comment ou par qui vous voulez que cela vous soit expliqué (par exemple : 'expliquez-moi cela comme si j'avais cinq ans' ou 'expliquez-moi cela avec la personnalité de Michael Jordan avec des explications de basketball').\"",
+                chatPlaceholder: "Tapez votre question ou votre invite de persona ici...",
+                sendButton: "Envoyer",
+                generatingExplanation: "Génération de l'explication...",
+                selectLanguage: "Langue :",
+            },
+            de: { // German translations
+                mainTitle: "Willkommen im Lernzentrum für Anfänger!",
+                learnButtonShow: "Lass uns etwas lernen!",
+                learnButtonHide: "Themen ausblenden",
+                mainTitleTopics: "Was möchtest du heute lernen?",
+                chooseTopic: "Wähle ein Thema:",
+                aiButton: "Was ist KI und wie kann sie mir beim Lernen helfen?",
+                githubButton: "Was ist GitHub und wie benutze ich es?",
+                pythonHtmlButton: "Was ist Python? Was ist HTML?",
+                aiPersonaButton: "Was ist eine KI-Persona und wie kann sie mir beim Lernen helfen?",
+                checkBackMessage: "Schauen Sie bald wieder vorbei, um weitere Themen zu erfahren!",
+                backToTopics: "&larr; Zurück zu den Themen",
+                askAIExplainer: "Fragen Sie den KI-Erklärer!",
+                chatbotPrompt: "\"Wählen Sie, wie oder von wem Sie dies erklärt haben möchten (zum Beispiel: 'erklären Sie dies, als wäre ich fünf Jahre alt' oder 'erklären Sie dies mit der Persona von Michael Jordan mit Basketball-Erklärungen').\"",
+                chatPlaceholder: "Geben Sie hier Ihre Frage oder Persona-Eingabeaufforderung ein...",
+                sendButton: "Senden",
+                generatingExplanation: "Erklärung wird generiert...",
+                selectLanguage: "Sprache:",
+            },
+            it: { // Italian translations
+                mainTitle: "Benvenuti nell'Hub di Apprendimento per Principianti!",
+                learnButtonShow: "Impariamo qualcosa!",
+                learnButtonHide: "Nascondi argomenti",
+                mainTitleTopics: "Cosa vuoi imparare oggi?",
+                chooseTopic: "Scegli un argomento:",
+                aiButton: "Cos'è l'IA e come può aiutarmi a imparare?",
+                githubButton: "Cos'è GitHub e come lo uso?",
+                pythonHtmlButton: "Cos'è Python? Cos'è HTML?",
+                aiPersonaButton: "Cos'è una Persona AI e come può aiutarmi a imparare?",
+                checkBackMessage: "Torna presto per scoprire altri argomenti!",
+                backToTopics: "&larr; Torna agli argomenti",
+                askAIExplainer: "Chiedi all'AI Explainer!",
+                chatbotPrompt: "\"Scegli come o da chi vuoi che ti venga spiegato (ad esempio: 'spiegamelo come se avessi cinque anni' o 'spiegamelo con la personalità di Michael Jordan con spiegazioni di basket').\"",
+                chatPlaceholder: "Digita qui la tua domanda o il tuo prompt di persona...",
+                sendButton: "Invia",
+                generatingExplanation: "Generazione della spiegazione...",
+                selectLanguage: "Lingua:",
+            },
+            pt: { // Portuguese translations
+                mainTitle: "Bem-vindo ao Centro de Aprendizagem para Iniciantes!",
+                learnButtonShow: "Vamos aprender algo!",
+                learnButtonHide: "Ocultar Tópicos",
+                mainTitleTopics: "O que você quer aprender hoje?",
+                chooseTopic: "Escolha um Tópico:",
+                aiButton: "O que é IA e como ela pode me ajudar a aprender?",
+                githubButton: "O que é GitHub e como eu o uso?",
+                pythonHtmlButton: "O que é Python? O que é HTML?",
+                aiPersonaButton: "O que é uma Persona de IA e como ela pode me ajudar a aprender?",
+                checkBackMessage: "Volte em breve para aprender mais tópicos!",
+                backToTopics: "&larr; Voltar para Tópicos",
+                askAIExplainer: "Pergunte ao Explicador de IA!",
+                chatbotPrompt: "\"Escolha como ou quem você quer que isso seja explicado para você (por exemplo: 'explique isso como se eu tivesse cinco anos' o 'explique isso para mim com a persona de Michael Jordan com explicações de basquete').\"",
+                chatPlaceholder: "Digite sua pergunta ou prompt de persona aqui...",
+                sendButton: "Enviar",
+                generatingExplanation: "Gerando explicação...",
+                selectLanguage: "Idioma:",
+            },
+            ja: { // Japanese translations
+                mainTitle: "初心者向け学習ハブへようこそ！",
+                learnButtonShow: "何か学びましょう！",
+                learnButtonHide: "トピックを非表示にする",
+                mainTitleTopics: "今日は何を学びたいですか？",
+                chooseTopic: "トピックを選択してください：",
+                aiButton: "AIとは何か、そしてどのように学習に役立つのか？",
+                githubButton: "GitHubとは何か、どのように使うのか？",
+                pythonHtmlButton: "Pythonとは？HTMLとは？",
+                aiPersonaButton: "AIペルソナとは何か、どのように学習に役立つのか？",
+                checkBackMessage: "近いうちにもっと多くのトピックを学ぶために戻ってきてください！",
+                backToTopics: "&larr; トピックに戻る",
+                askAIExplainer: "AI解説者に質問してください！",
+                chatbotPrompt: "「これをどのように、または誰に説明してほしいかを選択してください（例：「5歳児に説明して」または「マイケル・ジョーダンのペルソナでバスケットボールの解説を加えて説明して」）。」",
+                chatPlaceholder: "質問またはペルソナのプロンプトをここに入力してください...",
+                sendButton: "送信",
+                generatingExplanation: "説明を生成中...",
+                selectLanguage: "言語：",
+            },
+            "zh-Hans": { // Simplified Chinese translations
+                mainTitle: "欢迎来到新手学习中心！",
+                learnButtonShow: "让我们学习一些东西！",
+                learnButtonHide: "隐藏主题",
+                mainTitleTopics: "今天想学什么？",
+                chooseTopic: "选择一个主题：",
+                aiButton: "什么是AI，它如何帮助我学习？",
+                githubButton: "什么是GitHub，我如何使用它？",
+                pythonHtmlButton: "什么是Python？什么是HTML？",
+                aiPersonaButton: "什么是AI角色，它如何帮助我学习？",
+                checkBackMessage: "请尽快回来学习更多主题！",
+                backToTopics: "&larr; 返回主题",
+                askAIExplainer: "询问AI解释器！",
+                chatbotPrompt: "“选择您希望如何或由谁来解释（例如：‘像五岁孩子一样解释这个’或‘以迈克尔·乔丹的身份解释这个，并加入篮球术语’）。”",
+                chatPlaceholder: "在此输入您的问题或角色提示...",
+                sendButton: "发送",
+                generatingExplanation: "正在生成解释...",
+                selectLanguage: "语言：",
+            }
+        };
+
+        // Function to update all UI text based on the current language
+        function updateContentLanguage() {
+            const textElements = document.querySelectorAll('[data-key]');
+            textElements.forEach(element => {
+                const key = element.dataset.key;
+                if (uiText[currentLanguage] && uiText[currentLanguage][key]) {
+                    element.innerHTML = uiText[currentLanguage][key]; // Use innerHTML to allow HTML entities like &larr;
+                }
+            });
+
+            // Special handling for the main title and learn button text based on visibility
+            if (subMenu.classList.contains('hidden-element') && topicContentArea.classList.contains('hidden-element')) {
+                 mainTitle.textContent = uiText[currentLanguage].mainTitle;
+                 learnButton.textContent = uiText[currentLanguage].learnButtonShow;
+            } else if (!subMenu.classList.contains('hidden-element')) {
+                mainTitle.textContent = uiText[currentLanguage].mainTitleTopics;
+                learnButton.textContent = uiText[currentLanguage].learnButtonHide;
+            } else if (!topicContentArea.classList.contains('hidden-element')) {
+                // If a topic is open, update its title and explanation based on the current language
+                const topicData = topics[currentLanguage][currentTopic];
+                if (topicData) {
+                    mainTitle.textContent = topicData.title; // Main title becomes topic title
+                    topicTitleElement.textContent = topicData.title;
+                    topicExplanationElement.innerHTML = topicData.explanation;
+                }
+                learnButton.classList.add('hidden-element'); // Keep hidden
+            }
+
+            // Update chatbot input placeholder
+            chatInput.placeholder = uiText[currentLanguage].chatPlaceholder;
+
+            // Re-apply correct topic button texts based on current language
+            document.querySelectorAll('.topic-btn').forEach(button => {
+                const topicKey = button.dataset.key;
+                if (uiText[currentLanguage] && uiText[currentLanguage][topicKey]) {
+                    button.textContent = uiText[currentLanguage][topicKey];
+                }
+            });
+
+            // If a topic is currently displayed, re-render its content
+            if (!topicContentArea.classList.contains('hidden-element')) {
+                const topicData = topics[currentLanguage][currentTopic];
+                if (topicData) {
+                    topicTitleElement.textContent = topicData.title;
+                    topicExplanationElement.innerHTML = topicData.explanation;
+                }
+            }
         }
-        messageDiv.textContent = message;
-        chatHistoryDiv.appendChild(messageDiv);
-        chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to the bottom
-      }
 
-      // Function to handle sending messages to the AI
-      async function sendChatToAI() {
-        const userMessage = chatInput.value.trim();
-        if (!userMessage) return;
 
-        displayMessage("user", userMessage);
-        chatInput.value = ""; // Clear input field
-        loadingIndicator.classList.remove("hidden-element"); // Show loading indicator
-
-        // Determine the base context for the AI explanation based on the current topic
-        let topicContext = "";
-        if (currentTopic && topics[currentTopic]) {
-          topicContext = `The current topic is "${
-            topics[currentTopic].title
-          }". Here is the base explanation: ${topics[
-            currentTopic
-          ].explanation.replace(/<[^>]*>?/gm, "")}. `;
+        // Function to display messages in the chat history
+        function displayMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('mb-2', 'p-2', 'rounded-lg', 'break-words');
+            if (sender === 'user') {
+                messageDiv.classList.add('bg-blue-100', 'text-blue-800', 'self-end', 'ml-auto', 'text-right');
+            } else {
+                messageDiv.classList.add('bg-gray-200', 'text-gray-800', 'self-start', 'mr-auto');
+            }
+            messageDiv.textContent = message;
+            chatHistoryDiv.appendChild(messageDiv);
+            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight; // Scroll to the bottom
         }
 
-        const prompt = `${topicContext} The user wants to learn more about the current topic or recontextualize it. User's request: "${userMessage}". Please provide an explanation in a conversational and helpful manner.`;
+        // Function to handle sending messages to the AI
+        async function sendChatToAI() {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
 
-        // Add user prompt to chat history for API
-        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            displayMessage('user', userMessage);
+            chatInput.value = ''; // Clear input field
+            loadingIndicator.classList.remove('hidden-element'); // Show loading indicator
 
-        try {
-          const payload = {
-            contents: chatHistory,
-          };
-          const apiKey = ""; // API key is provided by the Canvas environment
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            // Determine the base context for the AI explanation based on the current topic
+            let topicContext = '';
+            if (currentTopic && topics[currentLanguage][currentTopic]) {
+                topicContext = `The current topic is "${topics[currentLanguage][currentTopic].title}". Here is the base explanation: ${topics[currentLanguage][currentTopic].explanation.replace(/<[^>]*>?/gm, '')}. `;
+            }
 
-          const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
+            const prompt = `${topicContext} The user wants to learn more about the current topic or recontextualize it. User's request: "${userMessage}". Please provide an explanation in a conversational and helpful manner.`;
 
-          const result = await response.json();
-          loadingIndicator.classList.add("hidden-element"); // Hide loading indicator
+            // Add user prompt to chat history for API
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
-          if (
-            result.candidates &&
-            result.candidates.length > 0 &&
-            result.candidates[0].content &&
-            result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0
-          ) {
-            const aiResponse = result.candidates[0].content.parts[0].text;
-            displayMessage("ai", aiResponse);
-            chatHistory.push({ role: "model", parts: [{ text: aiResponse }] }); // Add AI response to history
-          } else {
-            displayMessage(
-              "ai",
-              "Sorry, I could not generate a response. Please try again."
-            );
-            console.error("AI response structure unexpected:", result);
-          }
-        } catch (error) {
-          loadingIndicator.classList.add("hidden-element"); // Hide loading indicator
-          displayMessage(
-            "ai",
-            "Error connecting to the AI. Please try again later."
-          );
-          console.error("Fetch error:", error);
+            try {
+                const payload = {
+                    contents: chatHistory,
+                };
+                const apiKey = ""; // API key is provided by the Canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await response.json(); // Await the JSON parsing
+                loadingIndicator.classList.add('hidden-element'); // Hide loading indicator
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const aiResponse = result.candidates[0].content.parts[0].text;
+                    displayMessage('ai', aiResponse);
+                    chatHistory.push({ role: "model", parts: [{ text: aiResponse }] }); // Add AI response to history
+                } else {
+                    displayMessage('ai', 'Sorry, I could not generate a response. Please try again.');
+                    console.error('AI response structure unexpected:', result); // Log the full result for debugging
+                }
+            } catch (error) {
+                loadingIndicator.classList.add('hidden-element'); // Hide loading indicator
+                displayMessage('ai', 'Error connecting to the AI. Please try again later.');
+                console.error('Fetch error:', error); // Log fetch errors
+            }
         }
-      }
 
-      // Event listener for the initial "Let's learn something!" button
-      learnButton.addEventListener("click", () => {
-        subMenu.classList.toggle("hidden-element"); // Toggle visibility of topic buttons
-        topicContentArea.classList.add("hidden-element"); // Ensure topic content is hidden when toggling main menu
+        // Event listener for the initial "Let's learn something!" button
+        learnButton.addEventListener('click', () => {
+            subMenu.classList.toggle('hidden-element'); // Toggle visibility of topic buttons
+            topicContentArea.classList.add('hidden-element'); // Ensure topic content is hidden when toggling main menu
 
-        if (!subMenu.classList.contains("hidden-element")) {
-          learnButton.textContent = "Hide Topics";
-          learnButton.classList.remove(
-            "bg-green-500",
-            "hover:bg-green-600",
-            "focus:ring-green-300"
-          );
-          learnButton.classList.add(
-            "bg-red-500",
-            "hover:bg-red-600",
-            "focus:ring-red-300"
-          );
-          mainTitle.textContent = "What do you want to learn today?";
-        } else {
-          learnButton.textContent = "Let's learn something!";
-          learnButton.classList.remove(
-            "bg-red-500",
-            "hover:bg-red-600",
-            "focus:ring-red-300"
-          );
-          learnButton.classList.add(
-            "bg-green-500",
-            "hover:bg-green-600",
-            "focus:ring-green-300"
-          );
-          mainTitle.textContent = "Welcome to the Novice Learning Hub!";
-        }
-      });
+            if (!subMenu.classList.contains('hidden-element')) {
+                learnButton.textContent = uiText[currentLanguage].learnButtonHide;
+                learnButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'focus:ring-green-300');
+                learnButton.classList.add('bg-red-500', 'hover:bg-red-600', 'focus:ring-red-300');
+                mainTitle.textContent = uiText[currentLanguage].mainTitleTopics;
+            } else {
+                learnButton.textContent = uiText[currentLanguage].learnButtonShow;
+                learnButton.classList.remove('bg-red-500', 'hover:bg-red-600', 'focus:ring-red-300');
+                learnButton.classList.add('bg-green-500', 'hover:bg-green-600', 'focus:ring-green-300');
+                mainTitle.textContent = uiText[currentLanguage].mainTitle;
+            }
+        });
 
-      // Event listeners for topic buttons (using event delegation)
-      topicButtonsContainer.addEventListener("click", (event) => {
-        const target = event.target;
-        if (target.classList.contains("topic-btn")) {
-          currentTopic = target.dataset.topic; // Set current topic
-          const topicData = topics[currentTopic];
+        // Event listeners for topic buttons (using event delegation)
+        topicButtonsContainer.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.classList.contains('topic-btn')) {
+                // Ensure currentTopic is stored based on its data-topic attribute
+                currentTopic = target.dataset.topic;
+                const topicData = topics[currentLanguage][currentTopic]; // Access content for current language
 
-          if (topicData) {
-            topicTitleElement.textContent = topicData.title;
-            topicExplanationElement.innerHTML = topicData.explanation; // Use innerHTML for formatted content
-            chatHistory = []; // Reset chat history for new topic
-            chatHistoryDiv.innerHTML = ""; // Clear chat display
+                if (topicData) {
+                    topicTitleElement.textContent = topicData.title;
+                    topicExplanationElement.innerHTML = topicData.explanation; // Use innerHTML for formatted content
+                    chatHistory = []; // Reset chat history for new topic
+                    chatHistoryDiv.innerHTML = ''; // Clear chat display
 
-            subMenu.classList.add("hidden-element"); // Hide topic selection
-            topicContentArea.classList.remove("hidden-element"); // Show topic content and chatbot
-            mainTitle.textContent = topicData.title; // Update main title to topic title
-            learnButton.classList.add("hidden-element"); // Hide "Let's learn something!" button
-          }
-        }
-      });
+                    subMenu.classList.add('hidden-element'); // Hide topic selection
+                    topicContentArea.classList.remove('hidden-element'); // Show topic content and chatbot
+                    mainTitle.textContent = topicData.title; // Update main title to topic title
+                    learnButton.classList.add('hidden-element'); // Hide "Let's learn something!" button
+                }
+            }
+        });
 
-      // Event listener for "Back to Topics" button
-      backToTopicsBtn.addEventListener("click", () => {
-        topicContentArea.classList.add("hidden-element"); // Hide topic content
-        subMenu.classList.remove("hidden-element"); // Show topic selection again
-        mainTitle.textContent = "What do you want to learn today?"; // Reset title
-        learnButton.classList.remove("hidden-element"); // Show "Let\'s learn something!" button again
-        learnButton.textContent = "Hide Topics"; // Keep consistent if still in 'hide' mode
-        learnButton.classList.remove(
-          "bg-green-500",
-          "hover:bg-green-600",
-          "focus:ring-green-300"
-        );
-        learnButton.classList.add(
-          "bg-red-500",
-          "hover:bg-red-600",
-          "focus:ring-red-300"
-        );
-      });
+        // Event listener for "Back to Topics" button
+        backToTopicsBtn.addEventListener('click', () => {
+            topicContentArea.classList.add('hidden-element'); // Hide topic content
+            subMenu.classList.remove('hidden-element'); // Show topic selection again
+            mainTitle.textContent = uiText[currentLanguage].mainTitleTopics; // Reset title based on current language
+            learnButton.classList.remove('hidden-element'); // Show "Let's learn something!" button again
+            learnButton.textContent = uiText[currentLanguage].learnButtonHide; // Keep consistent if still in 'hide' mode
+            learnButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'focus:ring-green-300');
+            learnButton.classList.add('bg-red-500', 'hover:bg-red-600', 'focus:ring-red-300');
+        });
 
-      // Event listener for sending chat message
-      sendChatBtn.addEventListener("click", sendChatToAI);
+        // Event listener for sending chat message
+        sendChatBtn.addEventListener('click', sendChatToAI);
 
-      // Allow sending message with Enter key
-      chatInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter") {
-          sendChatToAI();
-        }
-      });
+        // Allow sending message with Enter key
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendChatToAI();
+            }
+        });
+
+        // Language selector event listener
+        languageSelect.addEventListener('change', (event) => {
+            currentLanguage = event.target.value;
+            updateContentLanguage(); // Update all UI text and current topic explanation
+        });
+
+        // Initial content load based on default language
+        updateContentLanguage();
     </script>
-  </body>
+</body>
 </html>
